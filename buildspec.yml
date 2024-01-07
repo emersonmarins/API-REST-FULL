@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Install packages and create build...
+      - yarn
+    start:
+      commands:
+        - echo Start App...
+        - yarn production
+    post_build:
+      commands:
+        - echo Removing unnecessery files...
+        - rm -rf node_modules/
+    artifacts:
+      base-directory: '.'
+      files:
+       - '**/*'
