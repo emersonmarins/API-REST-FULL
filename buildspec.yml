@@ -18,6 +18,3 @@ artifacts:
   base-directory: '.'
   files:
     - '**/*'
-cache:
-  paths:
-    - 'node_modules/**/*'
