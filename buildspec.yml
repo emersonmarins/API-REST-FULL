@@ -3,17 +3,26 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo Install packages and create build...
+      - echo Install dependencies...
+      - npm install -g yarn
       - yarn
-    start:
-      commands:
-        - echo Start App...
-        - yarn production
-    post_build:
-      commands:
-        - echo Removing unnecessery files...
-        - rm -rf node_modules/
-    artifacts:
-      base-directory: '.'
-      files:
-       - '**/*'
+  build:
+    commands:
+      - echo Build started on `date`
+      - yarn build
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Deploying to AWS Elastic Beanstalk...
+      - apt-get install zip -y 
+      - zip -r my-app.zip .
+      - aws s3 cp my-app.zip s3://my-bucket/my-app.zip 
+      - aws elasticbeanstalk create-application-version --application-name my-application --version-label my-version --source-bundle S3Bucket="my-bucket",S3Key="my-app.zip"
+      - aws elasticbeanstalk update-environment --application-name my-application --environment-name my-env --version-label my-version
+
+artifacts:
+  files:
+    - my-app.zip 
+cache:
+  paths:
+    - 'node_modules/**/*'
