@@ -1,10 +1,16 @@
 version: 0.2
 
 phases:
+  install:
+    commands:
+      - echo Installing Node.js...
+      - curl -sL https://deb.nodesource.com/setup_18.x bash -
+      - apt-get install -y nodejs
+      - echo Installing Yarn...
+      - npm install -g yarn
   pre_build:
     commands:
-      - echo Install dependencies...
-      - npm install -g yarn
+      - echo Install dependencies and create the application...
       - yarn
   build:
     commands:
