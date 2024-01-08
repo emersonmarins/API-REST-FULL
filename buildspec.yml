@@ -9,12 +9,9 @@ phases:
     commands:
       - echo Start App...
       - yarn build
-  post_build:
-    commands:
-      - echo Removing unnecessary files...
-      - rm -rf node_modules/
-
+      - zip -r my-app.zip .
 artifacts:
-  base-directory: '.'
   files:
-    - '**/*'
+    - my-app.zip
+  base-directory: dist
+  discard-paths: no
