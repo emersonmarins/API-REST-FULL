@@ -1,34 +1,23 @@
 version: 0.2
 
 phases:
-  install:
-    commands:
-      - echo Installing Node.js...
-      - curl -sL https://deb.nodesource.com/setup_18.x | bash -
-      - apt-get install -y nodejs
-      - echo Installing Yarn...
-      - npm install -g yarn
   pre_build:
     commands:
-      - echo Install dependencies and create the application...
+      - echo Install packages and create build...
       - yarn
   build:
     commands:
-      - echo Build started on `date`
+      - echo Start App...
       - yarn build
   post_build:
     commands:
-      - echo Build completed on `date`
-      - echo Deploying to AWS Elastic Beanstalk...
-      - apt-get install zip -y 
-      - zip -r my-app.zip .
-      - aws s3 cp my-app.zip s3://my-bucket/my-app.zip 
-      - aws elasticbeanstalk create-application-version --application-name my-application --version-label my-version --source-bundle S3Bucket="my-bucket",S3Key="my-app.zip"
-      - aws elasticbeanstalk update-environment --application-name my-application --environment-name my-env --version-label my-version
+      - echo Removing unnecessary files...
+      - rm -rf node_modules/
 
 artifacts:
+  base-directory: '.'
   files:
-    - my-app.zip 
+    - '**/*'
 cache:
   paths:
     - 'node_modules/**/*'
