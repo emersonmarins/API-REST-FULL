@@ -9,9 +9,15 @@ phases:
     commands:
       - echo Start App...
       - yarn build
-      - zip -r my-app.zip .
 artifacts:
   files:
-    - my-app.zip
+    - '**/*'
   base-directory: '.'
   discard-paths: no
+  exclude-paths:
+    - src/
+    - tests/
+    - jest.config.ts/
+    - .editorconfig/
+    - tsconfig.json/
+    
