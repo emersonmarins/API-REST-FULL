@@ -1,2 +1,2 @@
 export * from './cidades';
-export * from './test01';
+export * from './User';

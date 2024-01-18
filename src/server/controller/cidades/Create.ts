@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import * as yup from 'yup';
 
 
-import { validation } from '../../shared/middlewares';
+import { validation } from '../../middlewares';
 
 interface ICidades {
   nome: string,

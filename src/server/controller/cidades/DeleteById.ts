@@ -4,7 +4,7 @@ import { ParsedUrlQuery } from 'querystring';
 import * as yup from 'yup';
 
 
-import { validation } from '../../shared/middlewares';
+import { validation } from '../../middlewares';
 
 interface IParamsProps {
   id?: number,

@@ -5,6 +5,7 @@ import * as yup from 'yup';
 
 
 import { validation } from '../../middlewares';
+import { connector } from '../../database/mysql-connect';
 
 interface IParamsProps {
   id?: number,
@@ -15,20 +16,12 @@ export const paramsIdSchema: yup.ObjectSchema<IParamsProps> = yup.object().shape
   id: yup.number().optional().moreThan(0)
 });
 
-export const getByIdValidation = validation({
+export const deleteByIdValidation = validation({
   params: paramsIdSchema,
 });
 
-export const getById = (req: Request<IParamsProps>, res: Response) => {
-  if (Number(req.params.id) === 595959) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      errors: {
-        default: 'Record does not exist'
-      }
-    });
-  }
-  return res.status(StatusCodes.OK).json({
-    id: req.params.id,
-    nome: 'Taguatinga'
-  });
+export const deleteById = (req: Request<IParamsProps>, res: Response) => {
+  connector.deleteUser(req.params.id);
+
+  return res.status(StatusCodes.NO_CONTENT).send();
 };
